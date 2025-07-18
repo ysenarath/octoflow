@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "octoflow"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = []
+authors = [
+    { name = "Yasas Senarath", email = "12231659+ysenarath@users.noreply.github.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/ysenarath/octoflow#readme"
+Issues = "https://github.com/Ysenarath/octoflow/issues"
+Source = "https://github.com/Ysenarath/octoflow"
+
+[tool.hatch.version]
+path = "src/octoflow/__init__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = ["mypy>=1.0.0"]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/octoflow tests}"
+
+[tool.coverage.run]
+source_pkgs = ["octoflow", "tests"]
+branch = true
+parallel = true
+omit = []
+
+[tool.coverage.paths]
+octoflow = ["src/octoflow", "*/octoflow/src/octoflow"]
+tests = ["tests", "*/octoflow/tests"]
+
+[tool.coverage.report]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
