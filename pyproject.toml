@@ -23,7 +23,12 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+    "flask-login>=0.6.3",
+    "flask-sqlalchemy>=3.1.1",
+    "pandas>=2.3.1",
+    "tqdm>=4.67.1",
+]
 
 [project.urls]
 Documentation = "https://github.com/ysenarath/octoflow#readme"
@@ -52,6 +57,4 @@ tests = ["tests", "*/octoflow/tests"]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [dependency-groups]
-dev = [
-    "ruff>=0.12.4",
-]
+dev = ["ruff>=0.12.4"]
