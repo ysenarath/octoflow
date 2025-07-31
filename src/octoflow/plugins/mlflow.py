@@ -11,6 +11,12 @@ import pandas as pd
 from mlflow import sklearn as mlflow_sklearn
 
 from pathlib import Path
+from packaging import version
+
+
+if version.parse(mlflow.__version__) >= version.parse("3.0.0"):
+    err = f"mlflow version {mlflow.__version__} is not compatible with this code"
+    raise ImportError(err)
 
 
 def set_experiment(experiment_name: str) -> None:
@@ -30,11 +36,11 @@ def set_experiment(experiment_name: str) -> None:
     mlflow.set_experiment(experiment_name=experiment_name, experiment_id=experiment_id)
 
 
-def set_tracking_uri(tracking_uri: str | Path | None = None):
-    if not tracking_uri:
-        return
+def set_tracking_uri(uri: str | Path | None = None):
     # uri: Union[str, Path]
-    mlflow.set_tracking_uri(tracking_uri)
+    if not uri:
+        return
+    mlflow.set_tracking_uri(uri)
 
 
 def get_tracking_uri() -> str:
