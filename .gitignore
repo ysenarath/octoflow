@@ -201,4 +201,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MLflow
 example/mlruns/*
+example/*/mlruns/*
