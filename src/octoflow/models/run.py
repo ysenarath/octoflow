@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Optional, TypedDict, Union
 
 from flask_sqlalchemy.query import Pagination
 from sqlalchemy import JSON, ForeignKey, UniqueConstraint
@@ -10,6 +10,13 @@ from octoflow.models.base import db
 
 if TYPE_CHECKING:
     from octoflow.models.experiment import Experiment
+
+
+class RunMeta(TypedDict):
+    run_name: str
+    start_time: float
+    end_time: float
+    status: int
 
 
 class RunStatus:
@@ -29,7 +36,7 @@ class Run(db.Model):
     start_time: Mapped[float] = mapped_column(nullable=False)
     end_time: Mapped[float] = mapped_column(nullable=True)
     status: Mapped[int] = mapped_column(nullable=False, default=RunStatus.RUNNING)
-    meta: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
+    data: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
 
     experiment: Mapped[Experiment] = relationship("Experiment", back_populates="runs")
 
@@ -61,7 +68,7 @@ def delete_run(run: Run) -> None:
     return None
 
 
-def find_run_by_name_in_experiment(experiment_id: int, name: str) -> Run | None:
+def find_run_by_name(experiment_id: int, name: str) -> Run | None:
     """Find a run by name in an experiment."""
     return (
         db.session.query(Run)
